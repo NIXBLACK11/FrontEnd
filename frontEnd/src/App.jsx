@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 import ColorModeToggle from './components/ColorModeToggle';
 import Signin from "./routes/Signin";
+import Home from './routes/Home';
 
 const App = () => {
 
@@ -12,7 +13,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Signin/>}/>
-          {/* <Route path="/home" element={<Home/>}/> */}
+          <Route path="/home" element={<Home/>}/>
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

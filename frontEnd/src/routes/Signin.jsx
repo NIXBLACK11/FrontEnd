@@ -21,6 +21,7 @@ import {
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import ColorModeToggle from '../components/ColorModeToggle';
 
+import { navigateToSignin, navigateToHome } from "../components/LinksUrl";
 
 const CFaLock = chakra(FaLock);
 const CFaUserAlt = chakra(FaUserAlt);
@@ -32,12 +33,12 @@ function Signin() {
 
     return <div>
         <Flex minWidth='max-content' alignItems='center' gap='2'>
-            <Box p='2'>
-                <Image src="../assets/react.svg" alt="VideoAnalyser" />
+            <Box p='2' onClick={navigateToHome}>
+                <Image src="src/assets/logo.png" alt="VideoAnalyser" />
             </Box>
             <Spacer />
             <ButtonGroup gap='2'>
-                <Button colorScheme='cyan'>Sign In</Button>
+                <Button colorScheme='cyan' onClick={navigateToHome}>Home</Button>
                 <ColorModeToggle/>
             </ButtonGroup>
         </Flex>
@@ -84,14 +85,14 @@ function Signin() {
                     placeholder="Password"
                   />
                   <InputRightElement width="4.5rem">
-                    <Button colorScheme='cyan' h="1.75rem" size="sm" onClick={handleShowClick}>
+                    <Button colorScheme='cyan' h="1.75rem" size="sm" href="/home">
                       {showPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                <FormHelperText textAlign="right">
+                {/* <FormHelperText textAlign="right">
                   <Link color="cyan.500" >forgot password?</Link>
-                </FormHelperText>
+                </FormHelperText> */}
               </FormControl>
               <Button
                 borderRadius={0}
@@ -108,7 +109,7 @@ function Signin() {
       </Stack>
       <Box>
         New to us?{" "}
-        <Link color="cyan.500" href="#">
+        <Link color="cyan.500" href="/signup">
           Sign Up
         </Link>
       </Box>
