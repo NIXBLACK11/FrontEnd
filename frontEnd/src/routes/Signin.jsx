@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from 'axios';
+import { useEffect } from "react";
 import {
     Flex,
     Heading,
@@ -18,6 +20,7 @@ import {
     InputRightElement,
     Spacer
 } from "@chakra-ui/react";
+
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import ColorModeToggle from '../components/ColorModeToggle';
 
@@ -29,7 +32,33 @@ const CFaUserAlt = chakra(FaUserAlt);
 function Signin() {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [clicked, setClicked] = useState(false);
+    const [details, setDetails] = useState({userName: "username", userPassword: "password"});
     const handleShowClick = () => setShowPassword(!showPassword);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        if (clicked) {
+          console.log(details);
+          try {
+            const response = await axios.post("http://localhost:3000/user/signin", details);
+            console.log(response.data);
+          } catch (error) {
+            if (error.response) {
+              console.error('Error Status:', error.response.status);
+              console.error('Error Data:', error.response.data);
+            } else if (error.request) {
+              console.error('No response received:', error.request);
+            } else {
+              console.error('Error Message:', error.message);
+            }
+          }
+        }
+        setClicked(false);
+      };
+    
+      fetchData();
+    }, [clicked]);
 
     return <div>
         <Flex minWidth='max-content' alignItems='center' gap='2'>
@@ -71,7 +100,17 @@ function Signin() {
                     pointerEvents="none"
                     children={<CFaUserAlt color="cyan.300"/>}
                   />
-                  <Input type="email" placeholder="email address" />
+                  <Input 
+                    type="string" 
+                    placeholder="username"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setDetails({
+                        ...details,
+                        userName: e.target.value 
+                      })
+                    }}
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -83,16 +122,20 @@ function Signin() {
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setDetails({
+                        ...details,
+                        userPassword: e.target.value 
+                      })
+                    }}
                   />
                   <InputRightElement width="4.5rem">
-                    <Button colorScheme='cyan' h="1.75rem" size="sm" href="/home">
+                    <Button colorScheme='cyan' h="1.75rem" size="sm" onClick={handleShowClick}>
                       {showPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                {/* <FormHelperText textAlign="right">
-                  <Link color="cyan.500" >forgot password?</Link>
-                </FormHelperText> */}
               </FormControl>
               <Button
                 borderRadius={0}
@@ -100,6 +143,10 @@ function Signin() {
                 variant="solid"
                 colorScheme="cyan"
                 width="full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setClicked(true);
+                }}
               >
                 Login
               </Button>
