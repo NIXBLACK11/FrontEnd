@@ -16,7 +16,6 @@ import {
     Link,
     Avatar,
     FormControl,
-    FormHelperText,
     InputRightElement,
     Spacer
 } from "@chakra-ui/react";
@@ -65,9 +64,9 @@ function Signin() {
     }, [clicked, history]);
 
     return <div>
-        <Flex minWidth='max-content' alignItems='center' gap='2'>
+        <Flex minWidth='max-content' paddingX='2' alignItems='center' gap='2'>
             <Box p='2' onClick={navigateToHome}>
-                <Image src="src/assets/logo.png" alt="VideoAnalyser" />
+                <Image src="/src/assets/logo.png" alt="VideoAnalyser" />
             </Box>
             <Spacer />
             <ButtonGroup gap='2'>

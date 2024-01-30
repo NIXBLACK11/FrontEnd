@@ -16,9 +16,9 @@ import { navigateToSignin, navigateToHome, navigateToSignup } from "../component
 
 function Home() {
     return <div>
-        <Flex minWidth='max-content' alignItems='center' gap='2'>
+        <Flex minWidth='max-content' paddingX='2' alignItems='center' gap='2'>
             <Box p='2' onClick={navigateToHome}>
-                <Image src="src/assets/logo.png" alt="VideoAnalyser" />
+                <Image src="/src/assets/logo.png" alt="VideoAnalyser" />
             </Box>
             <Spacer />
             <ButtonGroup gap='2'>
@@ -30,7 +30,7 @@ function Home() {
         <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={4} alignItems="center">
             {/* Image Grid Item */}
             <GridItem margin="5">
-                <Image src="src/assets/first.png" alt="Image" borderRadius="xl"/>
+                <Image src="/src/assets/first.png" alt="Image" borderRadius="xl"/>
             </GridItem>
 
             {/* Text Grid Item */}
