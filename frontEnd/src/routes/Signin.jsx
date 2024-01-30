@@ -22,8 +22,9 @@ import {
 } from "@chakra-ui/react";
 
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import ColorModeToggle from '../components/ColorModeToggle';
+import { useNavigate } from "react-router-dom"; 
 
+import ColorModeToggle from '../components/ColorModeToggle';
 import { navigateToSignin, navigateToHome } from "../components/LinksUrl";
 
 const CFaLock = chakra(FaLock);
@@ -31,6 +32,7 @@ const CFaUserAlt = chakra(FaUserAlt);
 
 function Signin() {
 
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [clicked, setClicked] = useState(false);
     const [details, setDetails] = useState({userName: "username", userPassword: "password"});
@@ -43,6 +45,8 @@ function Signin() {
           try {
             const response = await axios.post("http://localhost:3000/user/signin", details);
             console.log(response.data);
+            localStorage.setItem("token", "Bearer "+response.data.token);
+            navigate(`/user/${details.userName}`);
           } catch (error) {
             if (error.response) {
               console.error('Error Status:', error.response.status);
@@ -58,7 +62,7 @@ function Signin() {
       };
     
       fetchData();
-    }, [clicked]);
+    }, [clicked, history]);
 
     return <div>
         <Flex minWidth='max-content' alignItems='center' gap='2'>

@@ -12,7 +12,7 @@ import {
 
 import ColorModeToggle from '../components/ColorModeToggle';
 
-import { navigateToSignin, navigateToHome } from "../components/LinksUrl";
+import { navigateToSignin, navigateToHome, navigateToSignup } from "../components/LinksUrl";
 
 function Home() {
     return <div>
@@ -22,7 +22,8 @@ function Home() {
             </Box>
             <Spacer />
             <ButtonGroup gap='2'>
-                <Button colorScheme='cyan' onClick={navigateToSignin}>SignIn</Button>
+                <Button colorScheme='cyan' onClick={navigateToSignin}>Sign In</Button>
+                <Button colorScheme='cyan' onClick={navigateToSignup}>Sign Up</Button>
                 <ColorModeToggle/>
             </ButtonGroup>
         </Flex>

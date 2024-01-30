@@ -5,3 +5,7 @@ export const navigateToSignin = () => {
 export const navigateToHome = () => {
     window.location.href = '/home';
 };
+
+export const navigateToSignup = () => {
+    window.location.href = '/signup';
+};

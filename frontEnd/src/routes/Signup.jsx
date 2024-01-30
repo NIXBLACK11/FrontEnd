@@ -177,7 +177,7 @@ function Signin() {
       </Stack>
       <Box>
         Already a User?{" "}
-        <Link color="cyan.500" href="/sigin">
+        <Link color="cyan.500" href="/">
           Sign In
         </Link>
       </Box>
