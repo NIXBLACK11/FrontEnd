@@ -72,16 +72,16 @@ function User() {
                 <ColorModeToggle/>
             </ButtonGroup>
         </Flex>
-        <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={4} alignItems="center">
+        <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={2} alignItems="center">
             {/* Image Grid Item */}
-            <GridItem margin="5">
-                <FileUpload/>
+            <GridItem marginY={1} marginX={1}>
+                <FileUpload userName={userName}/>
             </GridItem>
 
             {/* Text Grid Item */}
-            <GridItem margin="3">
-                <Text >
-                🚀 Unlock the hidden insights within your videos like never before! Our cutting-edge video analysis platform is here to revolutionize the way you perceive and understand your video content. Whether you're a content creator, marketer, or just curious about the magic happening in your favorite videos, we've got you covered.
+            <GridItem marginY={1} marginX={1}>
+                <Text color="cyan.500">
+                    Hello! Share a video link and its genre, and I'll analyze and save it for you. Whether it's entertaining or informative, your preferences matter. Provide the link, select the genre, and I'll handle the rest. Excited to help with your video selection!
                 </Text>
             </GridItem>
         </Grid>
