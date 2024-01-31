@@ -23,9 +23,7 @@ const CMdDescription = chakra(MdOutlineDescription);
 const FileUpload = ({ userName }) => {
   const [videoDetails, setVideoDetails] = useState({
     videoTitle: "title",
-    videoDescription: "description",
-    videoDuration: "80 hours",
-    videoResolution: "1080p"
+    videoDescription: "description"
   });
 
   // const [clicked, setClicked] = useState(false);
@@ -42,32 +40,31 @@ const FileUpload = ({ userName }) => {
       const file = event.target.files[0];
   
       if (file) {
-        const formData = new FormData();
-        formData.append("video", file);
-        // formData.append("videoTitle", "ttttttttt");
-        // formData.append("videoDescription", videoDetails.videoDescription);
-        // formData.append("videoDuration", videoDetails.videoDuration);
-        // formData.append("videoResolution", videoDetails.videoResolution);
-        console.log(formData);
         const token = getTokenFromLocalStorage();
   
         if (!token) {
           console.error("Token is missing");
           return;
         }
-  
-        const response = await axios.post(`http://localhost:3000/user/${userName}/video`, {
-            videoDetails: videoDetails,
-            formData: formData
-        }, {
+        
+        const response1 = await axios.post(`http://localhost:3000/user/${userName}/videoData`, videoDetails, {
+          headers: {
+            Authorization: `${token}`
+          }
+        });
+        
+        const videoId = response1.data.videoId;
+
+        const formData = new FormData();
+        formData.append("video", file, `${videoId}.mp4`);
+
+        const response2 = await axios.post(`http://localhost:3000/user/${userName}/video`, formData, {
           headers: {
             Authorization: `${token}`
           }
         });
   
-        console.log("Response:", response.data);  // Log the response data for debugging
-  
-        if (response.status === 200) {
+        if (response2.status === 200) {
           console.log("Video uploaded successfully");
         } else {
           console.error("Error uploading video");
