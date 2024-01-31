@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AspectRatio,
   Box,
@@ -10,7 +10,8 @@ import {
   chakra,
   FormControl,
   InputGroup,
-  InputLeftElement
+  InputLeftElement,
+  Button
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import axios from "axios";
@@ -26,7 +27,8 @@ const FileUpload = ({ userName }) => {
     videoDescription: "description"
   });
 
-  // const [clicked, setClicked] = useState(false);
+  const [videoEvent, setVideoEvent] = useState();
+  const [clicked, setClicked] = useState(false);
   const controls = useAnimation();
   const startAnimation = () => controls.start("hover");
   const stopAnimation = () => controls.stop();
@@ -35,45 +37,51 @@ const FileUpload = ({ userName }) => {
     return localStorage.getItem("token");
   };
 
-  const handleFileChange = async (event) => {
-    try {
-      const file = event.target.files[0];
-  
-      if (file) {
-        const token = getTokenFromLocalStorage();
-  
-        if (!token) {
-          console.error("Token is missing");
-          return;
-        }
-        
-        const response1 = await axios.post(`http://localhost:3000/user/${userName}/videoData`, videoDetails, {
-          headers: {
-            Authorization: `${token}`
+  useEffect(() => {
+    const handleFileChange = async () => {
+      try {
+        const file = videoEvent.target.files[0];
+    
+        if (file) {
+          const token = getTokenFromLocalStorage();
+    
+          if (!token) {
+            console.error("Token is missing");
+            return;
           }
-        });
-        
-        const videoId = response1.data.videoId;
+          
+          const response1 = await axios.post(`http://localhost:3000/user/${userName}/videoData`, videoDetails, {
+            headers: {
+              Authorization: `${token}`
+            }
+          });
 
-        const formData = new FormData();
-        formData.append("video", file, `${videoId}.mp4`);
+          const videoId = response1.data.videoId;
 
-        const response2 = await axios.post(`http://localhost:3000/user/${userName}/video`, formData, {
-          headers: {
-            Authorization: `${token}`
+          const formData = new FormData();
+          formData.append("video", file, `${videoId}.mp4`);
+
+          const response2 = await axios.post(`http://localhost:3000/user/${userName}/video`, formData, {
+            headers: {
+              Authorization: `${token}`
+            }
+          });
+    
+          if (response2.status === 200) {
+            console.log("Video uploaded successfully");
+          } else {
+            console.error("Error uploading video");
           }
-        });
-  
-        if (response2.status === 200) {
-          console.log("Video uploaded successfully");
-        } else {
-          console.error("Error uploading video");
         }
+      } catch (error) {
+        console.error("Error:", error.message);
       }
-    } catch (error) {
-      console.error("Error:", error.message);
+    };
+    if (clicked) {
+      // Call the handleFileChange function if the button is clicked
+      handleFileChange();
     }
-  };
+  }, [clicked]);
 
   return (
     <Container my="12">
@@ -131,8 +139,10 @@ const FileUpload = ({ userName }) => {
               left="0"
               opacity="0"
               aria-hidden="true"
-              accept="video/*"  // Update accept attribute for videos
-              onChange={handleFileChange}  // Add onChange event to handle file change
+              accept="video/*"
+              onChange={(e) => {
+                setVideoEvent(e);
+              }}
               ref={fileInputRef}
               onDragEnter={startAnimation}
               onDragLeave={stopAnimation}
@@ -183,7 +193,7 @@ const FileUpload = ({ userName }) => {
                   />
                 </InputGroup>
               </FormControl>
-              {/* <Button
+              <Button
                 borderRadius={0}
                 type="submit"
                 variant="solid"
@@ -194,8 +204,8 @@ const FileUpload = ({ userName }) => {
                   setClicked(true);
                 }}
               >
-                Login
-              </Button> */}
+                Upload
+              </Button>
             </Stack>
     </Container>
   );

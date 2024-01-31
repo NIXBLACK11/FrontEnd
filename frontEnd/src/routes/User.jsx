@@ -81,7 +81,7 @@ function User() {
             {/* Text Grid Item */}
             <GridItem marginY={1} marginX={1}>
                 <Text color="cyan.500">
-                    Hello! Share a video link and its genre, and I'll analyze and save it for you. Whether it's entertaining or informative, your preferences matter. Provide the link, select the genre, and I'll handle the rest. Excited to help with your video selection!
+                    Upload your video along with its genre, and I'll analyze it using insights from top YouTube videos. I'll provide feedback on what aspects make your video great and suggest areas for improvement.
                 </Text>
             </GridItem>
         </Grid>
