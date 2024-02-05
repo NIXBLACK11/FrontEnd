@@ -11,7 +11,8 @@ import {
   FormControl,
   InputGroup,
   InputLeftElement,
-  Button
+  Button,
+  Select
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import axios from "axios";
@@ -21,10 +22,11 @@ import { MdTitle, MdOutlineDescription } from "react-icons/md";
 const CMdTitle = chakra(MdTitle);
 const CMdDescription = chakra(MdOutlineDescription);
 
-const FileUpload = ({ userName }) => {
+const FileUpload = ({ userName, setVideoResultLoading, setVideoResult }) => {
   const [videoDetails, setVideoDetails] = useState({
     videoTitle: "title",
-    videoDescription: "description"
+    videoDescription: "description",
+    videoGenre: "MrBeastType"
   });
 
   const [videoEvent, setVideoEvent] = useState();
@@ -39,6 +41,7 @@ const FileUpload = ({ userName }) => {
 
   useEffect(() => {
     const handleFileChange = async () => {
+      setVideoResultLoading(true);
       try {
         const file = videoEvent.target.files[0];
     
@@ -49,7 +52,7 @@ const FileUpload = ({ userName }) => {
             console.error("Token is missing");
             return;
           }
-          
+          console.log("request sent");
           const response1 = await axios.post(`http://localhost:3000/user/${userName}/videoData`, videoDetails, {
             headers: {
               Authorization: `${token}`
@@ -72,10 +75,15 @@ const FileUpload = ({ userName }) => {
           } else {
             console.error("Error uploading video");
           }
+
+          if(response2) {
+            setVideoResult(response2.data.data);
+          }
         }
       } catch (error) {
         console.error("Error:", error.message);
       }
+      setVideoResultLoading(false);
     };
     if (clicked) {
       // Call the handleFileChange function if the button is clicked
@@ -192,6 +200,24 @@ const FileUpload = ({ userName }) => {
                     }}
                   />
                 </InputGroup>
+              </FormControl>
+              <FormControl>
+              <Select 
+                placeholder='Select genre'
+                onChange={(e) => {
+                  e.preventDefault();
+                  setVideoDetails({
+                    ...videoDetails,
+                    videoGenre: e.target.value
+                  });
+                }}
+              >
+                <option value='MrBeastType'>Mr.Beast Type</option>
+                <option value='VlogType'>Vlog Type</option>
+                <option value='TechReviewType'>Tech Review Type</option>
+                <option value='GamingType'>Gaming Type</option>
+                <option value='MinimalistType'>Minimalist Type</option>
+              </Select>
               </FormControl>
               <Button
                 borderRadius={0}
