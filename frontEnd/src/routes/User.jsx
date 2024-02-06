@@ -20,6 +20,7 @@ import {
 import ColorModeToggle from '../components/ColorModeToggle';
 import { navigateToSignin, navigateToHome } from "../components/LinksUrl";
 import FileUpload from "../components/FileUpload";
+import BasicPie from "../components/BasicPie";
 
 function User() {
     const [ videoResult, setVideoResult ] = useState({});
@@ -101,6 +102,10 @@ function User() {
                     <div>
                         {videoResultLoading === false && (
                             <div>
+                                <Flex paddingX='2' alignItems='center' gap='2'>
+                                    <BasicPie videoResult = {videoResult.visual} title={"Video analysis chart"}/>
+                                    <BasicPie videoResult = {videoResult.audio} title={"Audio analysis chart"}/>
+                                </Flex>
                                 {Object.keys(videoResult.visual).map((key) => {
                                 const genre = videoResult.visual[key];
                                 return loadResult(genre);
@@ -109,9 +114,10 @@ function User() {
                                 const genre = videoResult.audio[key];
                                 return loadResult(genre);
                                 })}
-                                <Flex paddingX='2' alignItems='center'>
-                                    {videoResult.details}
-                                </Flex>
+                                {Object.keys(videoResult.details).map((key) => {
+                                const genre = videoResult.details[key];
+                                return loadVideoType(genre);
+                                })}
                             </div>
                         )}
                     </div>
@@ -134,6 +140,15 @@ function loadResult(genre) {
     );
 }
 
+function loadVideoType(genre) {
+    return (
+        <div key={genre.whatShouldBe}>
+            <Flex paddingX='2' alignItems='center'>
+                {genre.whatShouldBe}
+            </Flex>
+        </div>
+    );
+}
 
 export default User;
 
