@@ -14,7 +14,12 @@ import {
     GridItem,
     Text,
     Spinner,
-    Center
+    Center,
+    Accordion,
+    AccordionItem,
+    AccordionButton,
+    AccordionPanel,
+    AccordionIcon,
 } from "@chakra-ui/react";
 
 import ColorModeToggle from '../components/ColorModeToggle';
@@ -106,18 +111,58 @@ function User() {
                                     <BasicPie videoResult = {videoResult.visual} title={"Video analysis chart"}/>
                                     <BasicPie videoResult = {videoResult.audio} title={"Audio analysis chart"}/>
                                 </Flex>
-                                {Object.keys(videoResult.visual).map((key) => {
-                                const genre = videoResult.visual[key];
-                                return loadResult(genre);
-                                })}
-                                {Object.keys(videoResult.audio).map((key) => {
-                                const genre = videoResult.audio[key];
-                                return loadResult(genre);
-                                })}
-                                {Object.keys(videoResult.details).map((key) => {
-                                const genre = videoResult.details[key];
-                                return loadVideoType(genre);
-                                })}
+                                <Accordion defaultIndex={[0]} allowMultiple>
+                                    <AccordionItem>
+                                        <h2>
+                                        <AccordionButton>
+                                            <Box as="span" flex='1' textAlign='left'>
+                                            Visual analysis of your video
+                                            </Box>
+                                            <AccordionIcon />
+                                        </AccordionButton>
+                                        </h2>
+                                        <AccordionPanel pb={4}>
+                                            {Object.keys(videoResult.visual).map((key) => {
+                                            const genre = videoResult.visual[key];
+                                            return loadResult(genre);
+                                            })}
+                                        </AccordionPanel>
+                                    </AccordionItem>
+
+                                    <AccordionItem>
+                                        <h2>
+                                        <AccordionButton>
+                                            <Box as="span" flex='1' textAlign='left'>
+                                            Audio analysis of your video
+                                            </Box>
+                                            <AccordionIcon />
+                                        </AccordionButton>
+                                        </h2>
+                                        <AccordionPanel pb={4}>
+                                            {Object.keys(videoResult.audio).map((key) => {
+                                            const genre = videoResult.audio[key];
+                                            return loadResult(genre);
+                                            })}
+                                        </AccordionPanel>
+                                    </AccordionItem>
+
+                                    <AccordionItem>
+                                        <h2>
+                                        <AccordionButton>
+                                            <Box as="span" flex='1' textAlign='left'>
+                                            What your video should represent
+                                            </Box>
+                                            <AccordionIcon />
+                                        </AccordionButton>
+                                        </h2>
+                                        <AccordionPanel pb={4}>
+                                            {Object.keys(videoResult.details).map((key) => {
+                                            const genre = videoResult.details[key];
+                                            return loadVideoType(genre);
+                                            })}
+                                        </AccordionPanel>
+                                    </AccordionItem>
+                                </Accordion>
                             </div>
                         )}
                     </div>

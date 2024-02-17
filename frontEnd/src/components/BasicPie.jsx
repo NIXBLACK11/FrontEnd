@@ -1,20 +1,21 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 
-const options = {
-  title: "The video's genre distribution using the trending videos",
-  backgroundColor: "transparent", // Making the background transparent
-  titleTextStyle: {
-    color: "cyan", // Setting title text color to cyan
-  },
-  legend: {
-    textStyle: {
-      color: "cyan", // Setting legend text color to cyan
-    },
-  },
-};
-
 function BasicPie({ videoResult, title }) {
+
+  // const options = {
+  //   title: "The video's genre distribution using the trending videos",
+  //   backgroundColor: "transparent", // Making the background transparent
+  //   titleTextStyle: {
+  //     color: "cyan", // Setting title text color to cyan
+  //   },
+  //   legend: {
+  //     textStyle: {
+  //       color: "cyan", // Setting legend text color to cyan
+  //     },
+  //   },
+  // };
+
   const options = {
     title: title,
     backgroundColor: "transparent",
@@ -42,10 +43,11 @@ function BasicPie({ videoResult, title }) {
   // ];
 
   console.log(videoResult);
+  console.log(title);
 
   Object.keys(videoResult).map((key) => {
     const genre = videoResult[key];
-    data.push([genre.percentage, genre.percentage])
+    data.push([key, genre.percentage])
   })
 
   return (
