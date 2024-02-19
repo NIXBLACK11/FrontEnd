@@ -20,6 +20,8 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
+    ListItem,
+    UnorderedList
 } from "@chakra-ui/react";
 
 import ColorModeToggle from '../components/ColorModeToggle';
@@ -116,7 +118,9 @@ function User() {
                                         <h2>
                                         <AccordionButton>
                                             <Box as="span" flex='1' textAlign='left'>
-                                            Visual analysis of your video
+                                                <Text color="cyan.500">
+                                                    Visual analysis of your video
+                                                </Text>
                                             </Box>
                                             <AccordionIcon />
                                         </AccordionButton>
@@ -133,7 +137,9 @@ function User() {
                                         <h2>
                                         <AccordionButton>
                                             <Box as="span" flex='1' textAlign='left'>
-                                            Audio analysis of your video
+                                                <Text color="cyan.500">
+                                                    Audio analysis of your video
+                                                </Text>
                                             </Box>
                                             <AccordionIcon />
                                         </AccordionButton>
@@ -150,7 +156,9 @@ function User() {
                                         <h2>
                                         <AccordionButton>
                                             <Box as="span" flex='1' textAlign='left'>
-                                            What your video should represent
+                                                <Text color="cyan.500">
+                                                    What your video should represent
+                                                </Text>
                                             </Box>
                                             <AccordionIcon />
                                         </AccordionButton>
@@ -175,12 +183,9 @@ function User() {
 function loadResult(genre) {
     return (
         <div key={genre.details}>
-            <Flex paddingX='2' alignItems='center'>
-                {genre.details}
-            </Flex>
-            <Flex paddingX='2' alignItems='center'>
-                {genre.percentage}
-            </Flex>
+            <UnorderedList>
+                <ListItem>{genre.details} -- {genre.percentage}</ListItem>
+            </UnorderedList>
         </div>
     );
 }
@@ -188,9 +193,9 @@ function loadResult(genre) {
 function loadVideoType(genre) {
     return (
         <div key={genre.whatShouldBe}>
-            <Flex paddingX='2' alignItems='center'>
-                {genre.whatShouldBe}
-            </Flex>
+            <UnorderedList>
+                <ListItem>{genre.whatShouldBe}</ListItem>
+            </UnorderedList>
         </div>
     );
 }
