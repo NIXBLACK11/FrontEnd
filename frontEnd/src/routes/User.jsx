@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 
 import {
+    useToast,
     Flex,
     Image,
     Button,
@@ -29,7 +30,6 @@ import ColorModeToggle from '../components/ColorModeToggle';
 import { navigateToSignin, navigateToHome } from "../components/LinksUrl";
 import FileUpload from "../components/FileUpload";
 import BasicPie from "../components/BasicPie";
-import CreateToast from "../components/CreateToast";
 
 function User() {
     const [ videoResult, setVideoResult ] = useState({});
@@ -40,6 +40,8 @@ function User() {
     const getTokenFromLocalStorage = () => {
         return localStorage.getItem("token");
     };
+
+    const toast = useToast();
 
     useEffect(() => {
         const safetyCheck = async () => {
@@ -57,15 +59,16 @@ function User() {
                     }
                 });
                 if(!response.data.valid) {
-                    console.log("toast");
-                    CreateToast({
-                        title: 'Success!',
-                        description: 'Your action was successful.',
-                        state: 'error', // 'success', 'error', 'warning', 'info'
-                    });
                     navigate("/home");
                 }
             } catch(error) {
+                toast({
+                    title: "Invalid Username",
+                    description: "Use proper username",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                })
                 if (error.response) {
                     console.error('Error Status:', error.response.status);
                     console.error('Error Data:', error.response.data);
