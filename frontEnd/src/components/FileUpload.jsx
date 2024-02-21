@@ -16,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import axios from "axios";
-
 import { MdTitle, MdOutlineDescription } from "react-icons/md";
 
 const CMdTitle = chakra(MdTitle);

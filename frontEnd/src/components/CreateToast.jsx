@@ -13,4 +13,4 @@ function CreateToast({ title, description, state }) {
     )
 };
 
-export default CreateToast
+export default CreateToast;

@@ -21,13 +21,15 @@ import {
     AccordionPanel,
     AccordionIcon,
     ListItem,
-    UnorderedList
+    UnorderedList,
+    createToastFn
 } from "@chakra-ui/react";
 
 import ColorModeToggle from '../components/ColorModeToggle';
 import { navigateToSignin, navigateToHome } from "../components/LinksUrl";
 import FileUpload from "../components/FileUpload";
 import BasicPie from "../components/BasicPie";
+import CreateToast from "../components/CreateToast";
 
 function User() {
     const [ videoResult, setVideoResult ] = useState({});
@@ -55,6 +57,12 @@ function User() {
                     }
                 });
                 if(!response.data.valid) {
+                    console.log("toast");
+                    CreateToast({
+                        title: 'Success!',
+                        description: 'Your action was successful.',
+                        state: 'error', // 'success', 'error', 'warning', 'info'
+                    });
                     navigate("/home");
                 }
             } catch(error) {
