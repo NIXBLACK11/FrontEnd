@@ -195,7 +195,7 @@ function loadResult(genre) {
     return (
         <div key={genre.details}>
             <UnorderedList>
-                <ListItem>{genre.details} -- {genre.percentage}</ListItem>
+                <ListItem>{genre.details} -- {genre.percentage.toFixed(2)}</ListItem>
             </UnorderedList>
         </div>
     );

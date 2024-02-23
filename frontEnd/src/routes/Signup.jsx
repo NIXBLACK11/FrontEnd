@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 import { useEffect } from "react";
 import {
+    useToast,
     Flex,
     Heading,
     Input,
@@ -34,6 +35,7 @@ const CMdEmail = chakra(MdEmail);
 
 function Signin() {
 
+    const toast = useToast();
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [clicked, setClicked] = useState(false);
@@ -50,6 +52,12 @@ function Signin() {
             localStorage.setItem("token", "Bearer "+response.data.token);
             navigate(`/user/${details.userName}`);
           } catch (error) {
+            toast({
+              title: "User already exists or invalid Email",
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+            })
             if (error.response) {
               console.error('Error Status:', error.response.status);
               console.error('Error Data:', error.response.data);

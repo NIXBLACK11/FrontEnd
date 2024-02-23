@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 import { useEffect } from "react";
 import {
+    useToast,
     Flex,
     Heading,
     Input,
@@ -31,6 +32,7 @@ const CFaUserAlt = chakra(FaUserAlt);
 
 function Signin() {
 
+    const toast = useToast();
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [clicked, setClicked] = useState(false);
@@ -47,6 +49,13 @@ function Signin() {
             localStorage.setItem("token", "Bearer "+response.data.token);
             navigate(`/user/${details.userName}`);
           } catch (error) {
+            toast({
+              title: "Invalid Username or Password",
+              description: "Use proper username or Password",
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+            })
             if (error.response) {
               console.error('Error Status:', error.response.status);
               console.error('Error Data:', error.response.data);
