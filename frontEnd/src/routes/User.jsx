@@ -87,7 +87,11 @@ function User() {
         <div>
             <Flex minWidth='max-content' paddingX='2' alignItems='center' gap='2'>
                 <Box p='2' onClick={navigateToHome}>
-                    <Image src="/src/assets/logo.png" alt="VideoAnalyser" />
+                    <Image 
+                        style={{ width: 60, height: 60}}
+                        src="/src/assets/logo.png" 
+                        alt="VideoAnalyser" 
+                    />
                 </Box>
                 <Spacer />
                 <ButtonGroup gap='2'>
