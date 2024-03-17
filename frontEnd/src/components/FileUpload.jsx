@@ -12,7 +12,8 @@ import {
   InputGroup,
   InputLeftElement,
   Button,
-  Select
+  Select,
+  useToast
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import axios from "axios";
@@ -22,6 +23,7 @@ const CMdTitle = chakra(MdTitle);
 const CMdDescription = chakra(MdOutlineDescription);
 
 const FileUpload = ({ userName, setVideoResultLoading, setVideoResult }) => {
+  const toast = useToast();
   const [videoDetails, setVideoDetails] = useState({
     videoTitle: "title",
     videoDescription: "description",
@@ -52,11 +54,46 @@ const FileUpload = ({ userName, setVideoResultLoading, setVideoResult }) => {
             return;
           }
           console.log("request sent");
-          const response1 = await axios.post(`http://localhost:3000/user/${userName}/videoData`, videoDetails, {
-            headers: {
-              Authorization: `${token}`
-            }
-          });
+          let response1;
+          try {
+            response1 = await axios.post(`http://localhost:3000/user/${userName}/videoData`, videoDetails, {
+                headers: {
+                    Authorization: `${token}`
+                }
+            });
+            console.log(response1.status);
+          } catch (error) {
+            toast({
+              title: "User request limit exceeded",
+              description: "Upgrade your account",
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+            })
+            return;
+          }
+          
+          console.log(response1.status);
+          if (response1.status === 200) {
+            console.log(response1.status);
+            toast({
+              title: "Video uploaded",
+              description: "Video will be analysed",
+              status: "success",
+              duration: 9000,
+              isClosable: true,
+            })
+          } else {
+            console.log(response1.status);
+            toast({
+              title: "User request limit exceeded",
+              description: "Upgrade your account",
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+            })
+            return;
+          }
 
           const videoId = response1.data.videoId;
 
@@ -70,9 +107,23 @@ const FileUpload = ({ userName, setVideoResultLoading, setVideoResult }) => {
           });
     
           if (response2.status === 200) {
-            console.log("Video uploaded successfully");
+            console.log(response2.status);
+            toast({
+              title: "Video analysed succesfully",
+              status: "success",
+              duration: 9000,
+              isClosable: true,
+            })
           } else {
-            console.error("Error uploading video");
+            console.log(response2.status);
+            toast({
+              title: "Error in video analysis",
+              description: "enjoy!!",
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+            })
+            return;
           }
 
           if(response2) {
